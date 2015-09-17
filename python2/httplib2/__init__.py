@@ -1291,14 +1291,14 @@ class Http(object):
                 # Just because the server closed the connection doesn't apparently mean
                 # that the server didn't send a response.
                 if hasattr(conn, 'sock') and conn.sock is None:
-                    if i < RETRIES-1:
+                    if i < RETRIES:
                         conn.close()
                         conn.connect()
                         continue
                     else:
                         conn.close()
                         raise
-                if i < RETRIES-1:
+                if i < RETRIES:
                     conn.close()
                     conn.connect()
                     continue
@@ -1318,7 +1318,7 @@ class Http(object):
                     conn.close()
                     raise
             except (socket.error, httplib.HTTPException):
-                if i < RETRIES-1:
+                if i < RETRIES:
                     conn.close()
                     conn.connect()
                     continue
